@@ -1,0 +1,31 @@
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build Artifacts
+target/
+dist/
+build/
+node_modules/
+__pycache__/
+*.pyc
+
+# Virtual Environments
+venv/
+env/
+
+# Logs
+*.log
+
+# Deployment Archives
+*.tar.gz
+
+# Secrets & Configs
+.env
+application-secret.properties

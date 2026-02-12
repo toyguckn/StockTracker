@@ -1,0 +1,54 @@
+services:
+  backend:
+    build: ./backend
+    container_name: zst-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/zst_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SCRAPER_URL=http://scraper:8000
+    depends_on:
+      - db
+      - scraper
+    networks:
+      - zst-network
+
+  scraper:
+    build: ./scraper
+    container_name: zst-scraper
+    ports:
+      - "8000:8000"
+    networks:
+      - zst-network
+
+  frontend:
+    build: ./frontend
+    container_name: zst-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - zst-network
+
+  db:
+    image: postgres:16
+    container_name: zst-db
+    environment:
+      - POSTGRES_DB=zst_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - zst_data:/var/lib/postgresql/data
+    networks:
+      - zst-network
+
+volumes:
+  zst_data:
+
+
+networks:
+  zst-network:
+    driver: bridge
