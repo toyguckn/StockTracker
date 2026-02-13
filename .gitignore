@@ -32,3 +32,23 @@ application-secret.properties
 
 # User specific
 project_memory.md
+
+# Debug artifacts (contain session data)
+debug_*.html
+debug_*.png
+server_debug.*
+zara_window_data.json
+response_*.txt
+
+# Deployment scripts (contain server IP)
+deploy.ps1
+check_status.ps1
+fix_nginx_and_optimize.sh
+setup_server.sh
+setup_ssl.sh
+
+# Analysis/test scripts (not needed in repo)
+analyze_data*.py
+find_text.py
+verify_extraction.py
+test_server.py

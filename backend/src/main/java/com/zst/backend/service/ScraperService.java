@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
-import java.util.List;
+
 import java.util.Map;
 import java.util.Collections;
 
@@ -16,14 +16,14 @@ public class ScraperService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public List<String> fetchAvailableSizes(String url) {
+    public Map<String, Object> fetchAvailableSizes(String url) {
         try {
             Map<String, String> request = Collections.singletonMap("url", url);
-            ResponseEntity<List> response = restTemplate.postForEntity(scraperUrl + "/scrape-sizes", request, List.class);
+            ResponseEntity<Map> response = restTemplate.postForEntity(scraperUrl + "/scrape-sizes", request, Map.class);
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
-            return Collections.emptyList();
+            return Map.of("name", "", "image", "", "sizes", Collections.emptyList());
         }
     }
 

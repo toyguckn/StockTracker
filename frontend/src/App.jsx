@@ -7,13 +7,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // Configure Axios
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api', // Update in prod
+  baseURL: '/api', // Use relative path for production (via Nginx proxy)
 });
 
 function App() {
   const [step, setStep] = useState(1); // 1: URL, 2: Size, 3: Notify, 4: Success
   const [url, setUrl] = useState('');
   const [sizes, setSizes] = useState([]);
+  const [productInfo, setProductInfo] = useState({ name: '', image: '' });
   const [selectedSize, setSelectedSize] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,7 +24,9 @@ function App() {
     setError('');
     try {
       const response = await api.post('/products/check-sizes', { url: submittedUrl });
-      setSizes(response.data);
+      const data = response.data;
+      setSizes(data.sizes || []);
+      setProductInfo({ name: data.name || '', image: data.image || '' });
       setUrl(submittedUrl);
       setStep(2);
     } catch (err) {
@@ -59,6 +62,7 @@ function App() {
     setStep(1);
     setUrl('');
     setSizes([]);
+    setProductInfo({ name: '', image: '' });
     setSelectedSize('');
     setError('');
   };
@@ -83,6 +87,7 @@ function App() {
           {step === 2 && (
             <SizeSelector
               sizes={sizes}
+              productInfo={productInfo}
               selectedSize={selectedSize}
               onSelectSize={setSelectedSize}
               onConfirm={handleSizeConfirm}

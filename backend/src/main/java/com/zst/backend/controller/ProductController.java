@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -22,9 +22,9 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/products/check-sizes")
-    public ResponseEntity<List<String>> checkSizes(@RequestBody ProductRequest request) {
-        List<String> sizes = scraperService.fetchAvailableSizes(request.getUrl());
-        return ResponseEntity.ok(sizes);
+    public ResponseEntity<Map<String, Object>> checkSizes(@RequestBody ProductRequest request) {
+        Map<String, Object> result = scraperService.fetchAvailableSizes(request.getUrl());
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/tracking")
