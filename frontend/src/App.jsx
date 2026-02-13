@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductForm from './components/ProductForm';
 import SizeSelector from './components/SizeSelector';
 import NotificationForm from './components/NotificationForm';
@@ -18,6 +18,23 @@ function App() {
   const [selectedSize, setSelectedSize] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Fix mobile viewport height (iOS Safari address bar)
+  useEffect(() => {
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    setVH();
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+
+    return () => {
+      window.removeEventListener('resize', setVH);
+      window.removeEventListener('orientationchange', setVH);
+    };
+  }, []);
 
   const handleUrlSubmit = async (submittedUrl) => {
     setIsLoading(true);
@@ -68,7 +85,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center p-4 selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-start p-4 pt-24 pb-12 selection:bg-white selection:text-black">
       <header className="absolute top-8 w-full text-center">
         <h1 className="text-3xl font-serif tracking-[0.3em] uppercase">ZARA STOCK TRACKER</h1>
       </header>

@@ -3,7 +3,23 @@
 @tailwind utilities;
 
 @layer base {
+  /* Fix for mobile viewport height (iOS Safari address bar issue) */
+  :root {
+    --vh: 1vh;
+  }
+  
   body {
     @apply bg-zinc-950 text-zinc-100 antialiased;
+    /* Prevent overscroll bounce on mobile */
+    overscroll-behavior: none;
+    /* Ensure minimum height without viewport issues */
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+  }
+  
+  /* Ensure root div takes full height */
+  #root {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
   }
 }
