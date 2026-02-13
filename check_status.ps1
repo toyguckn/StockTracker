@@ -1,4 +1,4 @@
-$ServerIP = "YOUR_SERVER_IP" # e.g. 146.190.29.129
+$ServerIP = "146.190.29.129"
 $User = "root"
 
 Write-Host "Checking Server Status on $ServerIP..." -ForegroundColor Cyan

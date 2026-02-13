@@ -32,4 +32,6 @@ public class TrackingItem {
     private StockStatus lastStatus = StockStatus.OUT_OF_STOCK;
 
     private boolean isActive = true;
+
+    private int notificationCount = 0;
 }

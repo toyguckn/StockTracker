@@ -28,8 +28,22 @@ services:
     container_name: zst-frontend
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - backend
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      - ./nginx_conf:/etc/nginx/conf.d
+    networks:
+      - zst-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: zst-certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     networks:
       - zst-network
 
